@@ -16,13 +16,14 @@ before_install:
  - uname -a
  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install -qq build-essential g++ git cmake sqlite3 libsqlite3-dev qt5-default qttools5-dev-tools qttools5-dev cscope exuberant-ctags
  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install -qq build-essential g++ git cmake sqlite3 libsqlite3-dev qt4-dev-tools cscope exuberant-ctags
+ - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install -qq libclang-dev
  
 script: 
   - gcc -v && g++ -v && clang -v && cmake --version
   - mkdir -p build
   - cd build
   - rm -rf *
-  - cmake -G "Unix Makefiles" -DBUILD_QT5=OFF ..
+  - cmake -G "Unix Makefiles" -DBUILD_QT5=OFF -DLIBCLANG_INCLUDE_DIR=/usr/lib/llvm-6.0/include -DLIBCLANG_LIBRARY=/usr/lib/llvm-6.0/lib/libclang.so ..
   - make
   - make package
   - sudo make install
@@ -34,7 +35,7 @@ script:
   - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
   - cd build
   - rm -rf *
-  - cmake -G "Unix Makefiles" -DBUILD_QT5=ON ..
+  - cmake -G "Unix Makefiles" -DBUILD_QT5=ON -DLIBCLANG_INCLUDE_DIR=/usr/lib/llvm-6.0/include -DLIBCLANG_LIBRARY=/usr/lib/llvm-6.0/lib/libclang.so ..
   - make
   - make package
   - sudo make install
@@ -50,7 +51,7 @@ script:
   - mkdir -p buildnogui
   - cd buildnogui
   - rm -rf *
-  - cmake -G "Unix Makefiles" -DNO_GUI=ON ..
+  - cmake -G "Unix Makefiles" -DNO_GUI=ON -DLIBCLANG_INCLUDE_DIR=/usr/lib/llvm-6.0/include -DLIBCLANG_LIBRARY=/usr/lib/llvm-6.0/lib/libclang.so ..
   - make
   - make package
   - sudo make install
@@ -64,7 +65,7 @@ script:
   - rm -rf *
   - export CC=clang
   - export CXX=clang++
-  - cmake -G "Unix Makefiles" -DBUILD_QT5=ON ..
+  - cmake -G "Unix Makefiles" -DBUILD_QT5=ON -DLIBCLANG_INCLUDE_DIR=/usr/lib/llvm-6.0/include -DLIBCLANG_LIBRARY=/usr/lib/llvm-6.0/lib/libclang.so ..
   - make
   - make package
   - sudo make install
