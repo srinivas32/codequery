@@ -4,15 +4,34 @@ IF( LIBCLANG_INCLUDE_DIR AND LIBCLANG_LIBRARY )
 ENDIF( LIBCLANG_INCLUDE_DIR AND LIBCLANG_LIBRARY )
 
 
+# Ubuntu does not have libclang in the standard locations, unlike Arch Linux
+# hence below in the HINTS section, possible locations in Ubuntu are listed out
+
 IF ( UNIX )
 
-   FIND_PATH( LIBCLANG_INCLUDE_DIR clang-c/Index.h  )
-   FIND_LIBRARY(LIBCLANG_LIBRARY NAMES clang )
+   FIND_PATH( LIBCLANG_INCLUDE_DIR "clang-c/Index.h"  
+   HINTS "/usr/lib/llvm-3.8/include"
+         "/usr/lib/llvm-6.0/include"
+         "/usr/lib/llvm-8/include"
+         "/usr/lib/llvm-9/include"
+         "/usr/lib/llvm-10/include"
+         "/usr/lib/llvm-11/include"
+         "/usr/lib/llvm-12/include"
+   )
+   FIND_LIBRARY(LIBCLANG_LIBRARY NAMES "clang" 
+   HINTS "/usr/lib/llvm-3.8/lib"
+         "/usr/lib/llvm-6.0/lib"
+         "/usr/lib/llvm-8/lib"
+         "/usr/lib/llvm-9/lib"
+         "/usr/lib/llvm-10/lib"
+         "/usr/lib/llvm-11/lib"
+         "/usr/lib/llvm-12/lib"
+   )
 
 ELSE ( UNIX )
 
-   FIND_PATH( LIBCLANG_INCLUDE_DIR clang-c/Index.h  )
-   FIND_LIBRARY( LIBCLANG_LIBRARY NAMES clang )
+   FIND_PATH( LIBCLANG_INCLUDE_DIR "clang-c/Index.h"  )
+   FIND_LIBRARY( LIBCLANG_LIBRARY NAMES "clang" )
 
 ENDIF ( UNIX )
 

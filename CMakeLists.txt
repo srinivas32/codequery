@@ -40,7 +40,10 @@ set( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR} )
 add_subdirectory( "querylib" )
 add_subdirectory( "makedb" )
 add_subdirectory( "cli" )
+
+if (UNIX)
 add_subdirectory( "clangcq" )
+endif (UNIX)
 
 if (NO_GUI)
 else (NO_GUI)
