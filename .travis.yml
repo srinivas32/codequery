@@ -1,6 +1,4 @@
-arch:
-  - amd64
-  - ppc64le
+
 language: cpp
 
 dist: bionic
@@ -41,6 +39,29 @@ jobs:
         - ctags --fields=+i -nR
         - cqmakedb -s cq.db -c cscope.out -t tags -p -d
         - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
+        # added power support arch.
+    - language: cpp
+      compiler: gcc
+      script:
+        - mkdir -p build
+        - cd build
+        - rm -rf *
+        - export CC=gcc
+        - export CXX=g++
+        - cmake -G "Unix Makefiles" -DBUILD_QT5=OFF ..
+        - make
+        - make package
+        - sudo make install
+        - cqmakedb -v
+        - cd ..
+        - rm -f cscope.out
+        - rm -f tags
+        - rm -f cq.db
+        - cscope -cbR
+        - ctags --fields=+i -nR
+        - cqmakedb -s cq.db -c cscope.out -t tags -p -d
+        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u 
+          arch: ppc64le
     - language: cpp
       compiler: gcc
       script:
@@ -62,6 +83,29 @@ jobs:
         - ctags --fields=+i -nR
         - cqmakedb -s cq.db -c cscope.out -t tags -p -d
         - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
+        # added power support ppc64le arch.
+    - language: cpp
+      compiler: gcc
+      script:
+        - mkdir -p build
+        - cd build
+        - rm -rf *
+        - export CC=gcc
+        - export CXX=g++
+        - cmake -G "Unix Makefiles" -DBUILD_QT5=ON ..
+        - make
+        - make package
+        - sudo make install
+        - cqmakedb -v
+        - cd ..
+        - rm -f cscope.out
+        - rm -f tags
+        - rm -f cq.db
+        - cscope -cbR
+        - ctags --fields=+i -nR
+        - cqmakedb -s cq.db -c cscope.out -t tags -p -d
+        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u 
+          arch: ppc64le
     - language: cpp
       compiler: gcc
       script:
@@ -83,6 +127,30 @@ jobs:
         - ctags --fields=+i -nR
         - cqmakedb -s cq.db -c cscope.out -t tags -p -d
         - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
+        # added power support ppc64le arch.
+    - language: cpp
+      compiler: gcc
+      script:
+        - mkdir -p build
+        - cd build
+        - rm -rf *
+        - export CC=gcc
+        - export CXX=g++
+        - cmake -G "Unix Makefiles" -DNO_GUI=ON ..
+        - make
+        - make package
+        - sudo make install
+        - cqmakedb -v
+        - cd ..
+        - rm -f cscope.out
+        - rm -f tags
+        - rm -f cq.db
+        - cscope -cbR
+        - ctags --fields=+i -nR
+        - cqmakedb -s cq.db -c cscope.out -t tags -p -d
+        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
+          arch: ppc64le
+
     - language: cpp
       compiler: clang
       script:
@@ -103,8 +171,30 @@ jobs:
         - cscope -cbR
         - ctags --fields=+i -nR
         - cqmakedb -s cq.db -c cscope.out -t tags -p -d
-        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u        
-
+        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u 
+        # added power support ppc64le arch.
+    - language: cpp
+      compiler: clang
+      script:
+        - mkdir -p build
+        - cd build
+        - rm -rf *
+        - export CC=clang
+        - export CXX=clang++
+        - cmake -G "Unix Makefiles" -DBUILD_QT5=ON ..
+        - make
+        - make package
+        - sudo make install
+        - cqmakedb -v
+        - cd ..
+        - rm -f cscope.out
+        - rm -f tags
+        - rm -f cq.db
+        - cscope -cbR
+        - ctags --fields=+i -nR
+        - cqmakedb -s cq.db -c cscope.out -t tags -p -d
+        - cqsearch -s cq.db -p 1 -t CODEQUERY_SW_VERSION -u
+          arch: ppc64le
 addons:
   apt:
     packages:
